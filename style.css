@@ -1,4 +1,687 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    --spacing: 8px;
+    --light: whitesmoke;
+    --dark: black;
+    --intermediate: grey;   
+    --font: 'Marck Script', cursive;
+}
+
 body {
+    --bg1: rgb(231, 236, 241);
+    --bg2: rgb(172, 191, 211);
+    --bg3: rgb(111, 131, 151);
+    margin:0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(8deg, var(--bg1) 0, var(--bg1) 40%, transparent 40%),
+    linear-gradient(-10deg, var(--bg2) 0, var(--bg2) 50%, transparent 50%),
+    linear-gradient(4deg, var(--bg3) 0, var(--bg3) 60%, transparent 60%);
+    background-color: rgb(12, 6, 102);
+    width: 100%;
+    height: 100vh;
+}
+
+.santa-train {
+    --train-width:200px;
+    --santa-width: calc(var(--train-width) / 5);
+    --reindeer-width: calc(var(--train-width) / 2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top:10%;
+    left:calc(var(--train-width) * -2); 
+    animation: santa 8s ease-in-out 8s forwards; 
+    z-index:15;
+}
+
+.train {
+    --train-color: chocolate;
+    width: var(--train-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+}
+
+.train .back {
+    width: calc((var(--train-width) / 5) * 3);
+    translate: calc(var(--train-width) / 5);
+    aspect-ratio: 1/1;
+    border-radius: 8px 50% 8px 50%;
+    background-color: var(--train-color);
+}
+
+.train .bottom {
+    width: calc((var(--train-width) / 5) * 3);
+    aspect-ratio: 4/1;
+    background-color: var(--train-color);
+}
+
+.train .front {
+    width: calc(var(--train-width) / 8);
+    aspect-ratio: 1/3;
+    background-color: var(--train-color);
+    border-radius: 8px 0 8px 0;
+}
+
+.train::after {
+    content: "";
+    width: calc(var(--train-width) / 5 * 4);
+    aspect-ratio: 20/1;
+    background-color: grey;
+    translate: calc(var(--train-width) / 5);
+
+    position: absolute;
+    bottom: calc(var(--train-width) / -16);
+    transform: skew(-45deg);
+}
+
+.santa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: calc(var(--train-width) / 10);
+    left: calc(var(--train-width) / 3 * 2);
+    z-index: -1;
+    filter: drop-shadow(2px 2px 5px var(--dark));
+}
+
+.santa .ohohoh {
+    display: flex;
+    position: absolute;
+    opacity:0;
+    align-items: center;
+    padding: 1rem;
+    width: max-content;
+    font-weight: bold;
+    aspect-ratio: 1/0.5;
+    background-color: var(--light);
+    border-radius: 50%;
+    z-index: 2;
+    font-family: var(--font);
+    scale: -1 1;
+    top: calc(var(--santa-width) * -1);
+    animation: ohohoh 1s 17s forwards;
+}
+
+.santa .hat {
+    width: var(--santa-width);
+    aspect-ratio: 1/1.5;
     background-color: red;
+    clip-path: polygon(30% 0, 35% 0, 100% 100%, 0 100%);
+    border-bottom: 10px solid white;
+    border-top: 10px solid white;
+    border-radius: 50% 50% 0 0;
+    rotate: -15deg;
+    transform-origin: left bottom;
+    z-index: 1;
+}
+
+.santa .head {
+    background-color: rgb(248, 236, 238);
+    width: var(--santa-width);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin-top: calc(var(--santa-width) / -3);
+    position: relative;
+    z-index: 0;
+    border-left:10px solid var(--light)
+}
+.santa .head::before {
+    content: "";
+    background-color: var(--dark);
+    width:4px;
+    aspect-ratio: 2/1;
+    border-radius: 50%;
+    top:25%;
+    right:25%;
+    position: absolute;
+    z-index: 1;
+}
+.santa .head::after {
+    content: "";
+    background-color: var(--light);
+    width: calc(var(--santa-width) / 2);
+    aspect-ratio: 1/2;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    right: -4px;
+    position: absolute;
+    border-radius: 25%;
+    top:50%;
+    rotate:-15deg;
+}
+
+.santa .body {
+    width: var(--santa-width);
+    aspect-ratio: 1/1;
+    background-color: red;
+    border-radius: 25% 50% 25% 25%;
+    margin-top: calc(var(--santa-width) / -3);
+    z-index: 1;
+}
+
+.santa .belt {
+    width: var(--santa-width);
+    aspect-ratio: 1/0.3;
+    background-color: var(--dark);
+    border-radius: 10%;
+    margin-top: calc(var(--santa-width) / -8);
+    z-index: 2;
+}
+.santa .trousers {
+    width: var(--santa-width);
+    aspect-ratio: 1/0.6;
+    background-color: red;
+    border-radius: 25% 25% 0 0;
+    margin-top: calc(var(--santa-width) / -8);
+}
+
+.reindeer {
+    --reindeer-color: rgb(95, 43, 6);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.reindeer .body {
+    width: var(--reindeer-width);
+    aspect-ratio: 1/0.5;
+    border-radius: 50% 25% 50% 25%;
+    background-color: var(--reindeer-color);
+    position: relative;
+}
+
+.reindeer .body::after {
+    content:"";
+    width: var(--reindeer-width);
+    aspect-ratio: 1/0.5;
+    bottom: calc(var(--reindeer-width) * -0.25);
+    background: linear-gradient(to left,
+        transparent 0%, transparent 5%,
+        var(--reindeer-color) 5%, var(--reindeer-color) 15%,
+        transparent 15%, transparent 20%,
+        var(--reindeer-color) 20%, var(--reindeer-color) 30%,
+        transparent 30%, transparent 70%,
+        var(--reindeer-color) 70%, var(--reindeer-color) 80%,
+        transparent 80%, transparent 85%,
+        var(--reindeer-color) 85%, var(--reindeer-color) 95%,
+        transparent 95%, transparent 100% 
+        );
+    position: absolute;
+}
+
+.reindeer .head {
+    width: calc(var(--reindeer-width) / 2);
+    margin-left:-10%;
+    margin-top:-3%;
+    aspect-ratio: 1/0.5;
+    border-radius: 50% 50% 50% 25%;
+    rotate: -25deg;
+    background-color: var(--reindeer-color);
+    position: relative;    
+    z-index: 1;
+}
+
+.reindeer .head::before, .reindeer .head::after {
+    content:"";
+    width: calc(var(--reindeer-width) / 9);
+    aspect-ratio: 1/3;
+    background-color: rgb(210, 141, 30);
+    z-index: 3;
+    position: absolute;
+    top:-120%;
+    left:35%;
+    rotate:-15deg;
+    z-index: -1;
+}
+.reindeer .head::after {
+    rotate:15deg;
+    left:55%;
+}
+.reindeer .nose {
+    width: calc(var(--reindeer-width) / 8);
+    aspect-ratio: 1/1;
+    background-color: red;
+    border-radius: 50%;
+    align-items: flex-start;
+    margin-left:-5%;
+    margin-top:-5%;
+    z-index: 2;
+}
+.moon {
+    --moon-color: rgba(241, 241, 111);
+    width: 150px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    align-self: flex-end;
+    background: radial-gradient(circle at 75%, transparent, transparent 50%, var(--moon-color) 50%);
+    rotate: -20deg;
+    transition: 0.5s;
+    z-index:15;
+    position: absolute;
+    top:10px;
+    right: 10px;
+}
+
+.moon:hover {
+    rotate: -30deg;
+    filter: brightness(120%);
+    cursor: pointer;
+    filter: drop-shadow(0 0 15px var(--moon-color));
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.night {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--dark);
+    position: absolute;
+    inset:0;
+    z-index: 14;
+}
+
+h1 {
     color: white;
+    font-size: 6rem;
+    font-family: var(--font);
+    padding-right: 7rem;
+    margin-bottom: 5rem;
+}
+.elements {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    width: 75%;
+    z-index: 1;
+}
+
+/* .snow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    height: 100vh;
+}
+
+.snow div {
+    width: var(--snow-size, 5px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: var(--light);
+    z-index: 10;
+    animation: snowfall 5s var(--delay, 5s) linear infinite;
+}
+
+@keyframes snowfall {
+    0% {
+        translate:0% 0%;
+    }
+    100% {
+        translate:0% 100vh;
+    }
+}
+
+.snow div:nth-child(8n) {
+    --delay:0s;
+}
+
+.snow div:nth-child(12n+5) {
+    --delay:1s;
+}
+.snow div:nth-child(3n-4) {
+    --delay:2s;
+}
+.snow div:nth-child(6n-2) {
+    --delay:3s;
+}
+.snow div:nth-child(10n+4) {
+    --delay:4s;
+}
+
+.snow div:nth-child(5n -2) {
+    --snow-size: 5px
+}
+.snow div:nth-child(12n) {
+    --snow-size: 8px
+}
+.snow div:nth-child(4n -5) {
+    --snow-size: 12px
+} */
+
+.snowman {
+    --snowman-size: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.snowman .hat {
+    --hat-width: calc(var(--snowman-size) * 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: var(--hat-width);
+    height: calc(var(--snowman-size) / 2.5);
+    background-color: var(--dark);
+    z-index: 1;
+    border-radius: 50% 50% 0 0;
+}
+
+.snowman .hat::after {
+    content: "";
+    width: calc(var(--hat-width) + var(--snowman-size) * 0.2);
+    height: var(--spacing);
+    background-color: inherit;
+}
+
+.snowman .ball {
+    --ball-width: calc(var(--snowman-size) + var(--ball-width-modifier, 0px));
+    --ball-margin: calc(var(--ball-width) / -8);
+    background: radial-gradient(circle at 25% 25%, var(--light), var(--light) 0%, lightgrey);
+    border-radius: 50%;
+    box-shadow: 0 5px 5px var(--intermediate);
+    margin: var(--ball-margin);
+    width: var(--ball-width);
+    aspect-ratio: 1 / var(--ball-deformation, 0.9);
+}
+
+
+.snowman .head {
+    --ball-width-modifier: -30px;
+    --ball-deformation: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.snowman .eye {
+    width: calc(var(--ball-width) / 10);
+    aspect-ratio: 1/1;
+    background-color: var(--dark);
+    border-radius: 50%;
+}
+
+.snowman .carrot {
+    width: calc(var(--ball-width) / 8);
+    aspect-ratio: 1/5;
+    background-color: orange;
+    border-radius: 20% 20% 50% 50%;
+    align-self: flex-end;
+    rotate: 45deg;
+    transform-origin: -30%  20%;
+}
+
+
+.snowman .body {
+    z-index: -1;
+    position: relative;
+}
+
+.snowman .body::before, .snowman .body::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--snowman-size) * 0.5);
+    left: calc(var(--snowman-size) * -1);
+    width: calc(var(--snowman-size) * 0.8);
+    height: var(--spacing);
+    background-color: rgb(94, 46, 7);
+    border-radius: 20% 20% 50% 50%;
+    rotate: 30deg;
+    translate: calc(var(--snowman-size) * 0.3) ;
+    transform-origin: right;
+}
+
+.snowman .body::after {
+    left:unset; 
+    right: calc(var(--snowman-size) * -1);
+    rotate: -30deg;
+    translate: calc(var(--snowman-size) * -0.3) ;
+    transform-origin: left;
+}
+
+.snowman .legs {
+    --ball-width-modifier: 60px;
+    --ball-deformation: 0.8;
+    z-index: -2;
+}
+
+.candy {
+    --candy-size: 20rem;
+    font-size: var(--candy-size);
+    background: repeating-linear-gradient(45deg, var(--light), var(--light) 25px, red 25px, red 50px);
+    font-family: Arial, Helvetica, sans-serif;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    rotate:180deg;
+    filter: drop-shadow(-2px -2px 5px var(--intermediate));
+}
+
+
+.xmas-balls {
+    display: flex;
+    align-items: center;
+}
+
+.xmas-ball {
+    --xmas-ball-size: 150px;
+    width: var(--xmas-ball-size);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 25% 25%, rgb(196, 196, 221), rgb(113, 113, 204) 0%, blue 100%);
+    box-shadow: 5px 5px 15px -10px grey;
+    position: relative;
+}
+
+.xmas-ball::before {
+    content: "";
+    --hook-width: calc(var(--xmas-ball-size) / 5);
+    width: var(--hook-width);
+    aspect-ratio: 1/1;
+    border-radius: 50% 50% 4px 4px;
+    background: rgb(255, 153, 0); 
+    mask-image: radial-gradient(transparent 0, transparent 35% , black 35%);
+    position: absolute;
+    top: calc(var(--hook-width) * -1 + var(--spacing));
+    left: calc((var(--xmas-ball-size) - var(--hook-width)) / 2);
+    z-index: 1; 
+}
+
+.long-ball {
+    --xmas-ball-size: 150px;
+    aspect-ratio: 1/2;
+    background: radial-gradient(circle at 25% 25%, rgb(210, 196, 221), rgb(163, 113, 204) 0%, rgb(183, 0, 255) 100%);
+    border-radius: 75% 75% 75% 75%;
+    rotate: 20deg;
+    translate: -50%;
+}
+
+.tree {
+    --tree-size: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    --tree-color: rgb(93, 197, 44);
+    position:relative;
+}
+
+
+.bg-tree {
+    --tree-size: 75px;
+    --tree-color: var(--bg1);
+    position: absolute; 
+    z-index: -1; 
+}
+
+.bg-tree .trunk {
+    filter: saturate(20%);
+}
+
+.bg-tree:nth-child(n) {
+    --tree-size:100px;
+    filter:brightness(110%);
+    top: 45%;
+    left: 5%;
+}
+
+.bg-tree:nth-child(2n) {
+    filter: brightness(70%);
+    --tree-size: 30px;
+    top: 30%;
+    left: 10%;
+}
+.bg-tree:nth-child(3n) {
+    filter: brightness(80%);
+    --tree-size: 35px;
+    top: 30%;
+    left: 15%;
+}
+.bg-tree:nth-child(4n) {
+    --tree-size:90px;
+    top: 35%;
+    left: 85%;
+}
+
+.subtree {
+    margin-top: calc((var(--tree-size) + var(--tree-size-modifier, 0px)) / -3);
+    width: calc(var(--tree-size) + var(--tree-size-modifier, 0px));
+    aspect-ratio: 1/0.8;
+    background-color: var(--tree-color);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.subtree:nth-child(2) {
+    --tree-size-modifier: calc(var(--tree-size) / 2);
+    filter: brightness(90%);
+    z-index:-1;
+}
+
+.subtree:nth-child(3) {
+    --tree-size-modifier: var(--tree-size); 
+    filter: brightness(80%);
+    z-index:-2;
+
+}
+
+.trunk {
+    width: calc(var(--tree-size) / 2);
+    aspect-ratio: 1/0.7;
+    background-color:rgb(94, 46, 7)
+}
+
+
+.start:checked ~ .elements .snowman {
+    animation: snowman 1s 0.5s ease-in-out forwards;
+}
+.start:checked ~ .elements .hat {
+    animation: hat 1s 1.5s ease-in-out forwards;
+}
+.start:checked ~ .elements .candy {
+    animation: candy 1s 2.7s ease-in-out forwards;
+}
+.start:checked ~ .elements .xmas-balls .xmas-ball:nth-child(1) {
+    animation: xmas-ball 1s 4s ease-in-out forwards;
+}
+.start:checked ~ .elements .xmas-balls .xmas-ball:nth-child(2) {
+    animation: xmas-ball2 0.5s 3.7s ease-in-out forwards;
+}
+.start:checked ~ .elements .tree {
+    animation: tree 1s 5s ease-in-out forwards;
+}
+.start:checked ~ .elements .subtree:nth-child(1) {
+    animation: subtree 1s 6s ease-in-out forwards;
+}
+.start:checked ~ .night {
+    animation: night 1s ease-in-out forwards;
+}
+
+@keyframes snowman {
+    to {
+        translate: 140px -50px;
+    }
+}
+
+@keyframes hat {
+    to {
+        translate: 100px;
+        rotate: 90deg;
+    }
+}
+
+@keyframes candy {
+    to {
+        translate: 75px -240px;
+        scale: 0.6;
+        rotate: 0deg;
+    }
+}
+
+@keyframes xmas-ball {
+    to {
+        translate: 5px -230px;
+        rotate:360deg;
+    }
+}
+@keyframes xmas-ball2 {
+    to {
+        rotate:90deg;
+    }
+}
+
+@keyframes tree {
+    to {
+        translate: -280px -35px;
+    }
+}
+
+@keyframes subtree {
+    to {
+        mix-blend-mode: multiply;
+    }
+}
+
+@keyframes night {
+    to {
+        opacity: 0;
+        z-index: -10;
+    }
+}
+
+@keyframes santa {
+    60% {
+        top: 30%;
+        left:100%;
+        scale: 1 1;
+    }
+    70% {
+        scale: -2 2;
+    }
+    100% {
+        scale: -2 2;
+        top: 80%;
+        left:40%;
+    }
+}
+
+@keyframes ohohoh {
+    to {
+        opacity: 100%;
+    }
 }
